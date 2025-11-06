@@ -1,0 +1,100 @@
+﻿<Window x:Class="Pendue.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Jeu du Pendu" Height="500" Width="850"
+        WindowStartupLocation="CenterScreen"
+        Background="white">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Titre -->
+        <TextBlock Text="Jeu du Pendu"
+                   FontSize="32" FontWeight="Bold"
+                   Foreground="#28ABE3"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <!-- Zone difficulté + timer -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10">
+
+            <Button x:Name="DifficultyButton"
+                    Content="Difficulté : Facile"
+                    Width="160" Height="35"
+                    Margin="0,0,15,0"
+                    Background="#28ABE3"
+                    Foreground="White"
+                    Click="ChangeDifficulty_Click"/>
+
+            <TextBlock x:Name="TimerText"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#F15A29"
+                       VerticalAlignment="Center"
+                       Text="Temps : 60s"/>
+        </StackPanel>
+
+        <!-- Zone du jeu -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Alphabet -->
+            <WrapPanel x:Name="AlphabetPanel"
+                       Grid.Column="0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10,0,0,0"
+                       ItemHeight="45" ItemWidth="45"/>
+
+            <!-- Image du pendu -->
+            <Image x:Name="PenduImage"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Width="200"
+                   Height="200"
+                   Source="Images/Pendu1.png"/>
+        </Grid>
+
+        <!-- Mot caché -->
+        <TextBlock x:Name="WordText"
+                   Grid.Row="3"
+                   FontSize="30"
+                   FontWeight="SemiBold"
+                   Foreground="#28ABE3"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,10"/>
+
+        <!-- Statut -->
+        <TextBlock x:Name="StatusText"
+                   Grid.Row="4"
+                   FontSize="18"
+                   Foreground="#28ABE3"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,20"
+                   FontWeight="Bold"/>
+
+        <!-- Bouton nouvelle partie -->
+        <Button Grid.Row="4"
+                Content="Nouvelle Partie"
+                Width="200" Height="45"
+                Background="#F15A29"
+                Foreground="White"
+                FontWeight="Bold"
+                HorizontalAlignment="Right"
+                Cursor="Hand"
+                Click="Restart_Click"/>
+    </Grid>
+</Window>
