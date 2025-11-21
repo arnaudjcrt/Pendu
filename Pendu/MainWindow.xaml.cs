@@ -12,7 +12,7 @@ namespace Pendue
     public partial class MainWindow : Window
     {
         // --- VARIABLES PRINCIPALES DU JEU ---
-        private string mot;                  // Le mot à deviner
+        private string mot;                  // Le mot à deviner et la methode et private 
         private string hiddenWord;           // Le mot masqué avec des '_'
         private int vie;                     // Nombre de vies restantes
         private int erreurs;                 // Nombre d'erreurs commises
@@ -61,7 +61,7 @@ namespace Pendue
             hiddenWord = new string('_', mot.Length);
 
             // Mise à jour de l’interface graphique
-            WordText.Text = string.Join(" ", hiddenWord.ToCharArray());   // Affiche les lettres cachées séparées
+            WordText.Text = string.Join(" ", hiddenWord.ToCharArray());   // prend un mot et ensuite convertit en 'C', 'H', 'A', 'T' et les joint avec des espaces
             StatusText.Text = $"Tentatives restantes : {vie}";            // Affiche les vies
             PenduImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/Pendu1.png")); // Image initiale
 
@@ -93,7 +93,7 @@ namespace Pendue
         }
 
         // --- QUAND LE JOUEUR CLIQUE SUR UNE LETTRE ---
-        private void Letter_Click(object sender, RoutedEventArgs e)
+        private void Letter_Click(object sender, RoutedEventArgs e) //even click
         {
             Button clicked = (Button)sender;
 
@@ -112,7 +112,7 @@ namespace Pendue
             if (mot.Contains(letter))
             {
                 char[] temp = hiddenWord.ToCharArray(); // Convertit le mot caché en tableau de caractères
-                for (int i = 0; i < mot.Length; i++)
+                for (int i = 0; i < mot.Length; i++)    // Parcourt chaque lettre du mot
                 {
                     if (mot[i] == letter)
                         temp[i] = letter;               // Révèle la lettre correcte
@@ -156,9 +156,9 @@ namespace Pendue
         // --- MET À JOUR L’IMAGE DU PENDU SELON LES ERREURS ---
         private void UpdateImage()
         {
-            int index = Math.Min(erreurs + 1, 7); // Évite de dépasser l’image finale
+            int index = Math.Min(erreurs + 1, 7); // Évite de dépasser l’image finale car c que 1 et 7 images
             string packUri = $"pack://application:,,,/Images/Pendu{index}.png";
-            PenduImage.Source = new BitmapImage(new Uri(packUri)); // Affiche la nouvelle image
+            PenduImage.Source = new BitmapImage(new Uri(packUri)); // Affiche la nouvelle image crée un objet image à partir du chemin spécifié.
         }
 
         // --- JOUE UN SON (victoire, échec, fond, etc.) ---
@@ -175,21 +175,23 @@ namespace Pendue
                 }
                 else
                 {
-                    MediaPlayer effectPlayer = new MediaPlayer();
+                    MediaPlayer effectPlayer = new MediaPlayer(); // Crée un nouveau lecteur audio mediaplayer une classe type objet
                     effectPlayer.Open(new Uri(chemin, UriKind.Absolute)); // Ouvre le fichier son
                     effectPlayer.Play();                                  // Joue le son
 
                     // Libère le lecteur une fois le son terminé
-                    effectPlayer.MediaEnded += (s, e) =>
+                    effectPlayer.MediaEnded += (s, e) =>  // (s, e) => { ... } : fonction qui s'exécute quand l'événement arrive
+                                                          // s : objet qui a déclenché l'événement
+                                                          // e : informations sur l'événement
                     {
-                        effectPlayer.Close();
-                        effectPlayer = null;
+                        effectPlayer.Close();   // Lorsque la lecture du son est terminée, on ferme le MediaPlayer
+                        effectPlayer = null; // Puis on met la référence à null pour libérer la mémoire
                     };
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) // Gère les erreurs de lecture
             {
-                MessageBox.Show("Erreur lecture son : " + ex.Message);
+                MessageBox.Show("Erreur lecture son : " + ex.Message); // Affiche une boîte de dialogue avec le message d'erreur
             }
         }
 
@@ -233,7 +235,7 @@ namespace Pendue
         {
             StopTimer(); // Évite les doublons de timer
 
-            timer = new DispatcherTimer();
+            timer = new DispatcherTimer(); // Crée un nouveau timer
             timer.Interval = TimeSpan.FromSeconds(1); // Défilement toutes les secondes
             timer.Tick += Timer_Tick;                 // Action à chaque "tick"
             timer.Start();
